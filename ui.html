@@ -1,11 +1,18 @@
 <h2>.Grid</h2>
-<p class="description">.Grid is tool for creating custom grids from ellipse elements. Fill fields above and click Create button.</p>
+<p class="description">.Grid is tool for creating custom grids from ellipse elements. Fill fields below and click Create button.</p>
 <div>
   <p>Count X:   <input id="count-x" value="10"></p>
   <p>Count Y:   <input id="count-y" value="10"></p>
   <p>Dot Size:  <input id="size" value="10"></p>
   <p>Gap:       <input id="gap" value="10"></p>
-  <p>Hex Color: <input id="color" value="#333333"></p>
+  <p>Shape:     <Select id="shape">
+    <option value="rectangle">Rectangle</option>
+    <option value="ellipse">Ellipse</option>
+    <option value="triangle">Triangle</option>
+    <option value="star">Star</option>
+    <!-- <option value=""></option> -->
+  </Select></p>
+  <p>Color:     <input id="color" type="color" value="#000000"></p>
 </div>
 <div class="btnContainer">
   <button id="create" style="border-radius: 10px 0 0 0;">Create</button>
@@ -27,17 +34,42 @@ h2 {
 }
 
 p {
+  font-size: 12px;
+  margin: 4px 0 4px 10px;
+  color: #777;
   white-space: pre;
   font-family: 'Fira Code';
   display: flex;
   width: 300px;
 }
 
-input {
+select {
+  display: block;
+  width: 200px;
   font-family: 'Fira Code';
   padding: 3px;
   border-radius: 5px;
   border: 1px solid #aaa;
+}
+
+input {
+  display: block;
+  width: 200px;
+  font-family: 'Fira Code';
+  padding: 3px;
+  border-radius: 5px;
+  border: 1px solid #aaa;
+}
+
+input[type="color"] {
+	-webkit-appearance: none;
+  border: 1px solid #aaa;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+	border: none;
 }
 
 button {
@@ -47,7 +79,7 @@ button {
     height: 40px;
     border: 1px solid #aaa;
     background-color: #fff;
-    color: rgb(97, 126, 255);
+    color: #617eff;
     float: left;
     font-family: 'Fira Code';
     transition: background-color .7s;
@@ -70,12 +102,14 @@ button:focus {
 }
 
 p.description {
+  color: #111;
   margin-left: auto;
   margin-right: auto;
   white-space: normal;
   width: 300px;
   text-align: center;
   font-size: 14px;
+  padding-bottom: 10px;
 }
 </style>
 
@@ -86,13 +120,15 @@ document.getElementById('create').onclick = () => {
   const inputSize = document.getElementById('size');
   const inputGap = document.getElementById('gap');
   const inputColor = document.getElementById('color');
+  const selecShape = document.getElementById('shape')
 
   const color = inputColor.value;
   const size = parseInt(inputSize.value, 10);
   const gap = parseInt(inputGap.value, 10);
   const countX = parseInt(inputX.value, 10);
   const countY = parseInt(inputY.value, 10);
-  parent.postMessage({ pluginMessage: { type: 'create-dots', countX, countY, color, gap, size } }, '*')
+  const shape = selecShape.value;
+  parent.postMessage({ pluginMessage: { type: 'create-dots', countX, countY, color, gap, size, shape } }, '*')
 }
 
 document.getElementById('cancel').onclick = () => {

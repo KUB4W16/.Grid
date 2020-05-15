@@ -25,13 +25,25 @@ figma.ui.onmessage = msg => {
         const nodes = [];
         for (let y = 0; y < msg.countY; y++) {
             for (let x = 0; x < msg.countX; x++) {
-                const circle = figma.createEllipse();
-                circle.x = x * (msg.gap + msg.size);
-                circle.y += y * (msg.gap + msg.size);
-                circle.fills = [{ type: 'SOLID', color: hexToRGB(msg.color) }];
-                circle.resize(msg.size, msg.size);
-                figma.currentPage.appendChild(circle);
-                nodes.push(circle);
+                let shape;
+                if (msg.shape === "rectangle") {
+                    shape = figma.createRectangle();
+                }
+                else if (msg.shape === "ellipse") {
+                    shape = figma.createEllipse();
+                }
+                else if (msg.shape === "triangle") {
+                    shape = figma.createPolygon();
+                }
+                else if (msg.shape === "star") {
+                    shape = figma.createStar();
+                }
+                shape.x = x * (msg.gap + msg.size);
+                shape.y += y * (msg.gap + msg.size);
+                shape.fills = [{ type: 'SOLID', color: hexToRGB(msg.color) }];
+                shape.resize(msg.size, msg.size);
+                figma.currentPage.appendChild(shape);
+                nodes.push(shape);
             }
         }
         figma.currentPage.selection = nodes;
