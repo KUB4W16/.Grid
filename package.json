@@ -1,7 +1,7 @@
 {
-  "name": "DotGrid",
+  "name": ".Grid",
   "version": "1.0.0",
-  "description": "Your Figma Plugin",
+  "description": "Figma Plugin for creating custom grids from ellipse elements",
   "main": "code.js",
   "scripts": {
     "build": "tsc -p tsconfig.json"
