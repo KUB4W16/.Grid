@@ -1,0 +1,101 @@
+<h2>.Grid</h2>
+<p class="description">.Grid is tool for creating custom grids from ellipse elements. Fill fields above and click Create button.</p>
+<div>
+  <p>Count X:   <input id="count-x" value="10"></p>
+  <p>Count Y:   <input id="count-y" value="10"></p>
+  <p>Dot Size:  <input id="size" value="10"></p>
+  <p>Gap:       <input id="gap" value="10"></p>
+  <p>Hex Color: <input id="color" value="#333333"></p>
+</div>
+<div class="btnContainer">
+  <button id="create" style="border-radius: 10px 0 0 0;">Create</button>
+  <button id="cancel" style="border-radius: 0 10px 0 0;">Cancel</button>
+</div>
+
+<style>
+  @import url(https://cdn.jsdelivr.net/gh/tonsky/FiraCode@3/distr/fira_code.css);
+  
+body {
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  font-family: 'Fira Code';
+}
+
+h2 {
+  text-align: center;
+}
+
+p {
+  white-space: pre;
+  font-family: 'Fira Code';
+  display: flex;
+  width: 300px;
+}
+
+input {
+  font-family: 'Fira Code';
+  padding: 3px;
+  border-radius: 5px;
+  border: 1px solid #aaa;
+}
+
+button {
+    position: relative;
+    display: block;
+    width: 50%;
+    height: 40px;
+    border: 1px solid #aaa;
+    background-color: #fff;
+    color: rgb(97, 126, 255);
+    float: left;
+    font-family: 'Fira Code';
+    transition: background-color .7s;
+}
+
+button:hover {
+  background-color: #eee;
+}
+
+button:focus {
+  outline: 0;
+}
+
+.btnContainer {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+}
+
+p.description {
+  margin-left: auto;
+  margin-right: auto;
+  white-space: normal;
+  width: 300px;
+  text-align: center;
+  font-size: 14px;
+}
+</style>
+
+<script>
+document.getElementById('create').onclick = () => {
+  const inputX = document.getElementById('count-x');
+  const inputY = document.getElementById('count-y');
+  const inputSize = document.getElementById('size');
+  const inputGap = document.getElementById('gap');
+  const inputColor = document.getElementById('color');
+
+  const color = inputColor.value;
+  const size = parseInt(inputSize.value, 10);
+  const gap = parseInt(inputGap.value, 10);
+  const countX = parseInt(inputX.value, 10);
+  const countY = parseInt(inputY.value, 10);
+  parent.postMessage({ pluginMessage: { type: 'create-dots', countX, countY, color, gap, size } }, '*')
+}
+
+document.getElementById('cancel').onclick = () => {
+  parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
+}
+</script>
